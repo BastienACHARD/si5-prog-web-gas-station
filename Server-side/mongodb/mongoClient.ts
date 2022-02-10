@@ -1,9 +1,6 @@
 // Requête les données de MongoDB
 
-// Fonction de base pour se connecter à MongoDB
-
 import * as mongoDB from "mongodb";
-import { Station } from "../models/Station";
 
 const uri = 'mongodb+srv://Lucas:Macrondemission@essencinator.bcekz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 
