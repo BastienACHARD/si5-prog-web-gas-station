@@ -1,14 +1,16 @@
 import express from 'express';
 import * as mongoDB from 'mongodb';
 import * as dotenv from 'dotenv';
-import {api} from './api/essence';
+import {api} from './api/stations';
 import { updateMongo } from './mongodb/mongoClock';
 
 const app: express.Application = express();
  
 const port: number = 3000;
 
-app.use('/api', api)
+//updateMongo();
+
+app.use('/api/stations', api)
 
 app.use('*', (req, res) => res.status(404).end())
 

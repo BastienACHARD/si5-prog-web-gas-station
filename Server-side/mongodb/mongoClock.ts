@@ -10,4 +10,4 @@ function updateMongo(){
     setTimeout(updateMongo, interval);
 }
 
-export {updateMongo};
+export { updateMongo };

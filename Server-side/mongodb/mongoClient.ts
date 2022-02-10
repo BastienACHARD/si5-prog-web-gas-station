@@ -9,17 +9,16 @@ const uri = 'mongodb+srv://Lucas:Macrondemission@essencinator.bcekz.mongodb.net/
 
 const client = new mongoDB.MongoClient(uri);
 
-async function getCurrentMongoData() {
+async function getStations(query?: object) {
     try {
       await client.connect();
       const db = await client.db('current_data');
       const collection = await db.collection('test');
-      const res = (await collection.find({}).toArray())[0];
-      const castedRes: Station[] = res.pdv_liste;
-      return castedRes;
+      const res = await collection.find(query||{}).toArray();
+      return res;
     } finally {
       await client.close();
     }
   }
 
-export { getCurrentMongoData };
+export { getStations };

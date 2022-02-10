@@ -6,16 +6,28 @@ const uri = 'mongodb+srv://Lucas:Macrondemission@essencinator.bcekz.mongodb.net/
 
 const client = new MongoClient(uri);
 
-async function insertMongo(jsonContent: string) {
-    try {
-      await client.connect();
-      
-      const db = client.db('current_data');
-      const collection = db.collection('test');
-      const insertResult = await collection.insertOne(JSON.parse(jsonContent));
-    } finally {
-      await client.close();
-    }
+async function insertMongo(jsonContent: string){
+  try {
+    await client.connect();
+    const db = client.db('current_data');
+    const collection = db.collection('test');
+    const insertResult = await collection.insertMany(JSON.parse(jsonContent).pdv_liste.pdv);
+    console.log(`${insertResult.insertedCount} documents were inserted`);
+  } finally {
+    await client.close();
+  }
 }
 
-export {insertMongo};
+async function dropMongo(){
+  try {
+    await client.connect();
+    const db = client.db('current_data');
+    const collection = db.collection('test');
+    const deleteResult = await collection.deleteMany({});
+    console.log("Deleted " + deleteResult.deletedCount + " documents");
+  } finally {
+    await client.close();
+  }
+}
+
+export { insertMongo, dropMongo };
