@@ -4,7 +4,7 @@ import { xmlToJson } from '../utils/xmlToJson';
 import { unzip } from './../utils/unzip';
 import { insertMongo } from './../mongodb/mongoProvider';
 
-async function fetchCurrentGouvData(){
+async function fetchGouvData(){
     /*
     try {
         fetch('https://donnees.roulez-eco.fr/opendata/instantane')
@@ -20,4 +20,4 @@ async function fetchCurrentGouvData(){
     insertMongo(jsonContent);
 }
 
-export { fetchCurrentGouvData };
+export { fetchGouvData };

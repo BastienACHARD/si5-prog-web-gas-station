@@ -14,9 +14,8 @@ async function insertMongo(jsonContent: string) {
       const collection = db.collection('test');
       const insertResult = await collection.insertOne(JSON.parse(jsonContent));
     } finally {
-      // Ensures that the client will close when you finish/error
       await client.close();
     }
-  }
+}
 
 export {insertMongo};

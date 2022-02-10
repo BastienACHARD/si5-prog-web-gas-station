@@ -1,5 +1,6 @@
 import express, { Router } from 'express';
 import { getCurrentMongoData } from '../mongodb/mongoClient';
+import { Station } from '../models/Station';
 const api = Router();
 
 api.get('/current', (req, res) => {
@@ -11,4 +12,4 @@ api.get('/current', (req, res) => {
     }
   })
 
-  export {api};
+  export { api };

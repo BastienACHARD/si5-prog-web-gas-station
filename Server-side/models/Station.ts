@@ -1,14 +1,16 @@
 import { Horaire } from "./Horaire";
 import { Prix } from "./Prix";
+import { Service } from "./Service";
 
 export interface Station {
-    id: number,
-    lattitude: number,
-    longitude: number,
+    _id: number,
+    _lattitude: number,
+    _longitude: number,
+    _cp: number,
+    _pop: string,
     adresse: string,
     ville: string,
-    automateH24: 1 | null,
     horaires: Horaire[],
-    services: string[],
-    listeDePrix: Prix[]
+    services: Service[],
+    prix: Prix[]
 }
