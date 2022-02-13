@@ -1,6 +1,4 @@
 import express from 'express';
-import * as mongoDB from 'mongodb';
-import * as dotenv from 'dotenv';
 import {api} from './api/stations';
 import { updateMongo } from './mongodb/mongoClock';
 
@@ -8,7 +6,7 @@ const app: express.Application = express();
  
 const port: number = 3000;
 
-//updateMongo();
+updateMongo();
 
 app.use('/api/stations', api)
 

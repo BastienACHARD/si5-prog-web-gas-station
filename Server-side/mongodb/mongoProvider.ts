@@ -4,10 +4,11 @@ import {MongoClient} from 'mongodb';
 
 const uri = 'mongodb+srv://Lucas:Macrondemission@essencinator.bcekz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 
-const client = new MongoClient(uri);
+let client = new MongoClient(uri);
 
 async function insertMongo(jsonContent: string){
   try {
+    let client = new MongoClient(uri);
     await client.connect();
     const db = client.db('current_data');
     const collection = db.collection('test');
@@ -20,6 +21,7 @@ async function insertMongo(jsonContent: string){
 
 async function dropMongo(){
   try {
+    let client = new MongoClient(uri);
     await client.connect();
     const db = client.db('current_data');
     const collection = db.collection('test');

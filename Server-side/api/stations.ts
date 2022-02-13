@@ -27,5 +27,4 @@ api.get('/current/filter/:filter', async (req, res) => {
   }
 });
 
-
-  export { api };
+export { api };
