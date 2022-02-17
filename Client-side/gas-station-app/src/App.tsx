@@ -6,7 +6,7 @@ import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import {Icon} from 'leaflet'
 let headers = new Headers();
 
-headers.append('Access-Control-Allow-Origin', 'http://localhost:3001');
+headers.append('Access-Control-Allow-Origin', 'http://localhost:8080');
 headers.append('Access-Control-Allow-Credentials', 'true');
 
 
@@ -27,7 +27,7 @@ function App() {
 
 function gett(d:any){
  return () => {
-    fetch('http://localhost:3000/api/stations/current/byCity/'+d).then((res)=>{
+    fetch('http://localhost:8080/api/stations/current/byCity/'+d).then((res)=>{
       return res.json()})
       .then((result)=> {
         setData(result)

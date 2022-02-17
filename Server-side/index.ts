@@ -4,7 +4,7 @@ import { updateMongo } from './mongodb/mongoClock';
 
 const app: express.Application = express();
  
-const port: number = 3000;
+const port: number = 8080;
 
 updateMongo();
 
