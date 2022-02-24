@@ -9,8 +9,8 @@ let client = new MongoClient(uri);
 async function insertMongo(jsonContent: string){
   try {
     await client.connect();
-    const db = client.db('current_data');
-    const collection = db.collection('test');
+    const db = client.db(process.env.DB_NAME);
+    const collection = db.collection(process.env.COLLECTION_NAME_TEST as string);
     const insertResult = await collection.insertMany(JSON.parse(jsonContent));
     console.log(`Inserted ${insertResult.insertedCount} documents`);
   } finally {
@@ -21,8 +21,8 @@ async function insertMongo(jsonContent: string){
 async function dropMongo(){
   try {
     await client.connect();
-    const db = client.db('current_data');
-    const collection = db.collection('test');
+    const db = client.db(process.env.DB_NAME);
+    const collection = db.collection(process.env.COLLECTION_NAME_TEST as string);
     const deleteResult = await collection.deleteMany({});
     console.log("Deleted " + deleteResult.deletedCount + " documents");
   } finally {

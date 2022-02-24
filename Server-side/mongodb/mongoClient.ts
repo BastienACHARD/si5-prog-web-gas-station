@@ -12,8 +12,8 @@ let stationCollection: { stations?: mongoDB.Collection } = {}
 async function fetchFromMongo(query?: object) {
   try {
     await client.connect();
-    const db = await client.db('current_data');
-    const collection = await db.collection('test');
+    const db = await client.db(process.env.DB_NAME);
+    const collection = await db.collection(process.env.COLLECTION_NAME_TEST as string);
     stationCollection.stations = collection;
   } finally {
   }

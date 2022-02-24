@@ -16,10 +16,16 @@ async function fetchFromGouv(){
     } catch (error) {
         console.log(error);
     };
+<<<<<<< Updated upstream
 
     // dezip
     await unzip('zip_file/PrixCarburants_instantane.zip');
     */
+=======
+    // dezip
+    await unzip('zip_xml_file/PrixCarburants_instantane.zip');
+
+>>>>>>> Stashed changes
     // xml => json, puis transformation des données en Array de l'objet "Station"
     const jsonContent = await xmlToJson('zip_file/PrixCarburants_instantane.xml');
     const stations = gouvJsonToStation(jsonContent);

@@ -6,8 +6,8 @@ const interval = 3600000; //1 hour;
 //let interval = 10000; //10sec
 
 function fetchAll(){
-    //console.log("Updating mongo database");
-    fetchFromGouv();
+    console.log("Updating ...");
+    //fetchFromGouv();
     fetchFromMongo();
     setTimeout(fetchAll, interval);
 }
