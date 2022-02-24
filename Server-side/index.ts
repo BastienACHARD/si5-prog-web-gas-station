@@ -6,7 +6,7 @@ const app: express.Application = express();
  
 const port: number = 8080;
 
-updateMongo();
+//updateMongo();
 
 app.use('/api/stations', api)
 
