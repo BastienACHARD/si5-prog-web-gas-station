@@ -1,25 +1,23 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import LeafletMap from './Components/LeafletMap';
+import ListStationsComponent from './Components/ListStationsComponent';
+import { StationProvider } from './Contexts/stationContext';
 
-function App() {
+
+const App = () => {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <StationProvider>
+      <table>
+        <tbody>
+          <tr>
+            <td className='listStation'><ListStationsComponent /></td>
+            <td className='Map'><LeafletMap /></td>
+          </tr>
+        </tbody>
+      </table>
+    </StationProvider>
   );
 }
 
