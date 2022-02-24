@@ -3,8 +3,8 @@ import { Prix } from "./Prix";
 
 export class Station{
     constructor(
-        public latitude: number,
-        public longitude: number,
+        public latitude: string,
+        public longitude: string,
         public adresse : string,
         public ville : string,
         public services : string[],

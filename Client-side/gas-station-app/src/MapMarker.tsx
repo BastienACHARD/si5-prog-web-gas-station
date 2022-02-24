@@ -5,12 +5,12 @@ export{MapMarker}
 
     return (
 
-    <Marker key={props.index} position={[props.x._latitude / 100000, props.x._longitude / 100000]}
+    <Marker key={props.index} position={[props.x._latitude , props.x._longitude]}
                         icon={props.icon}>
                         <Popup>
                             <h2>
                                 {props.x._adresse}
-                                {props.index}
+                            
                             </h2>
                             <h2>
                                 {props.x._nom}

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Select from 'react-select';
 import Cities from './Cities.json'
 
 
 const SearchBar = (props:any) =>  {
   return (
-    <div style={{  width: '300px' ,marginLeft:'10px'}} className="App">
+    <div style={{  width:'200px'}} className="App">
       <Select 
         defaultValue={props.selectedOption}
                 onChange={props.setSelectedOption}
@@ -15,7 +15,6 @@ const SearchBar = (props:any) =>  {
                 
                  />
   
-  <div className="input-group-addon" ><i className="fa fa-search"></i></div>
 
     </div>
   );}

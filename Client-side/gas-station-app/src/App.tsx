@@ -3,11 +3,11 @@ import './App.css';
 import "leaflet/dist/leaflet.css"
 import {Map} from './Map';
 import Select from 'react-select';
-
 import Station from './Stations';
 import SearchBar from './SearchBar'
-import Cities from './Cities.json';
+import { AiOutlineSearch } from "react-icons/ai";
 import Header from './Header';
+import { Button } from 'react-bootstrap';
 
 
 
@@ -15,12 +15,8 @@ function App() {
   const [data, setData] = useState([] as Station[]);
   let [dataByType, setDataByType] = useState([] as Station[]);
   let [moins, setMoins] = useState( new Station() );
-  const [data1, setData1] = useState([] as Station[]);
-
   const [dataa, setDataa] = useState();
   const [type, setType] = useState();
-    const [price, setPrice] = useState([] as any[]);
-
   let [selectedOption, setSelectedOption] = useState<any>('');
 
 
@@ -45,7 +41,8 @@ function App() {
 ];
 
 function getType(type:any){
-    setType(type.target.value)
+  
+    setType(type.value)
 }
 
 
@@ -60,7 +57,7 @@ function getType(type:any){
 async function  getByCity(d:any)  {
 
 
-            let stations= await fetchUpcoming(d);
+   let stations= await fetchUpcoming(d);
    return stations;
    }
 
@@ -71,11 +68,15 @@ async function  getByCity(d:any)  {
 
 
 async function fetchUpcoming(d:any)  {
-        let stations:Station[]=[];
-        console.log(d)
+  let stations:Station[]=[];    
+  const requestOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ city: d.value })
+      };
   try {
     let response = await fetch(
-      'http://localhost:8080/api/stations/current/byCity/'+d.value
+      'http://localhost:8080/api/stations/current/byCity/',requestOptions
     );
      
           let responseJson = await response.json();
@@ -87,7 +88,7 @@ async function fetchUpcoming(d:any)  {
       station._longitude=x.longitude;
       station._adresse=x.adresse;
       station._ville=x.ville;
-      if(x.listeDePrix!=undefined){
+      if(x.listeDePrix!==undefined){
       x.listeDePrix.map((price:any)=> {     
           station._valeur=price.valeur;
           station._nom=price.nom;
@@ -172,7 +173,6 @@ stationsByPrice.push(station)
 
      })
     stationsByPrice=stationsByPrice.sort((a:Station, b:Station) => a._valeur - b._valeur);
-    console.log(stationsByPrice[0])
     setMoins(stationsByPrice[0])
     setData(stationsByPrice)
 
@@ -190,35 +190,46 @@ stationsByPrice.push(station)
       
   
   return (
-    < div style={{backgroundColor: "#abbdff",height:"1000px"}}>
+    < div style={{backgroundColor: "#abbdff",height:"1200px", width:'1700px'}}>
 
     <Header />
 
 
 
 
-             <div style={{  float:"left",width:"900px", marginTop:'50px'}} >
-               <div style={{marginBottom:'50px'}} >
-               <SearchBar setSelectedOption={setSelectedOption} selectedOption={selectedOption}/>
-               <div style={{ width:"300px" ,marginBottom:'50px'}}>
-               <Select onChange={getType} placeholder="Types" options={options}  />
+             <div style={{  marginLeft:"100px" , marginTop:'50px',  width:'1150px',marginBottom:'200px'}} >
+             <div style={{  width:'400px',float:"left"}} >
+
+               <SearchBar  style={{ float:"left"}}  setSelectedOption={setSelectedOption} selectedOption={selectedOption}/>
+               <div style={{ float:"right", width:'200px',marginTop:'-38px'}} >
+               <Button  variant="light"  onClick={ (()=> getByCity(selectedOption))}><AiOutlineSearch/></Button> 
+
+               </div>
                </div>
 
-               <button  onClick={ (()=> getByCity(selectedOption))}>OK</button> 
-               <button  onClick={ cancelAll()} >X</button> 
+               <div style={{  width:'750px',float:"right"}} >
+               <div style={{  width:'200px',float:"left"}} >
+
+               <Select onChange={getType} placeholder="Types" options={options}  className="App" />
                </div>
+               <div style={{  width:'550px',float:"right"}} >
+                <  Button   variant="light" onClick={ getByType(type)} >GO</Button> 
+                    <Button style={{  marginLeft:"100px"}} variant="light"  onClick={ getByPrice(type)} >display stations by price</Button> 
+                    <Button style={{  marginLeft:"100px"}} variant="light"  onClick={ cancelAll()} >Clear All</Button> 
 
 
-       
- <button onClick={ getByType(type)} >display stations by type</button> 
- <button onClick={ getByPrice(type)} >display stations by price</button> 
+ </div>
+ </div>
+
+
+
 
       </div>
-           <Map  style={{  float:"right"}} list={data} list1={moins} >
+      <div >
 
-             </Map>
+          <Map list={data} list1={moins} >   </Map>
          
-
+          </div>
      </div>
 
 

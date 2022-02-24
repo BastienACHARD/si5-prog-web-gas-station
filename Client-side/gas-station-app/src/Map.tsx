@@ -1,6 +1,7 @@
 import {Icon} from 'leaflet'
 import {MapMarker} from './MapMarker';
 import {TileLayer,MapContainer } from 'react-leaflet'
+import FloatButton from './FloatButton';
 
 // import React in our code
 import React, { useState, useEffect } from 'react';
@@ -27,7 +28,7 @@ const blueIcon = new Icon({
  const Map = (props:any) => {
 
     return (
-        <MapContainer style={{ height: '650px', width: '1500px' }} center={[42.585444, 13.257684]} zoom={6} >
+        <MapContainer style={{ height: '650px', width: '1700px' }} center={[42.585444, 13.257684]} zoom={6} >
             <TileLayer
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
@@ -38,6 +39,12 @@ const blueIcon = new Icon({
                     ) : (
                         <MapMarker  x={x} index={index} icon={greenIcon} />
                     ))))}
+
+<FloatButton
+        title={"My Position"}
+        markerPosition={[43.697745, 7.269276 ]}
+        description="This is a custom description!"
+      />
         </MapContainer>
     );
 };
