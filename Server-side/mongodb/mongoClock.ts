@@ -2,14 +2,11 @@
 import { fetchFromGouv } from '../carburantgouv/carburantgouvClient';
 import { fetchFromMongo } from './mongoClient';
 
-const interval = 3600000; //1 hour;
-//let interval = 10000; //10sec
-
 function fetchAll(){
-    //console.log("Updating mongo database");
+    console.log("Updating ...");
     fetchFromGouv();
     fetchFromMongo();
-    setTimeout(fetchAll, interval);
+    setTimeout(fetchAll, process.env.CLOCK_TICK_IN_MS as number|undefined);
 }
 
 export { fetchAll };

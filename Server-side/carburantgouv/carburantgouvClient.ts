@@ -6,30 +6,30 @@ import { insertMongo, dropMongo } from './../mongodb/mongoProvider';
 import { gouvJsonToStation } from '../mapper/gouvJsonToStation';
 
 async function fetchFromGouv(){
-    /*
+    console.log("Updating mongo data with gouvernment data")
+
     // récupérer le .zip du gouvernement correspondant aux dernières données
     try {
         fetch('https://donnees.roulez-eco.fr/opendata/instantane')
         .then(res => {
-            fs.writeFile('zip_file/PrixCarburants_instantane.zip', res.body); 
+            fs.writeFile('zip_xml_file/PrixCarburants_instantane.zip', res.body); 
         })
     } catch (error) {
         console.log(error);
     };
-
     // dezip
-    await unzip('zip_file/PrixCarburants_instantane.zip');
-    */
+    await unzip('zip_xml_file/PrixCarburants_instantane.zip');
+
+
     // xml => json, puis transformation des données en Array de l'objet "Station"
-    const jsonContent = await xmlToJson('zip_file/PrixCarburants_instantane.xml');
+    const jsonContent = await xmlToJson('zip_xml_file/PrixCarburants_instantane.xml');
     const stations = gouvJsonToStation(jsonContent);
-/*
+
     // supprimer les anciennes données
     await dropMongo();
-
+    
     // insérer les nouvelles données
     await insertMongo(JSON.stringify(stations));
-*/
 }
 
 export { fetchFromGouv };

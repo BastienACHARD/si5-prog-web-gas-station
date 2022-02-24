@@ -2,15 +2,13 @@
 
 import {MongoClient} from 'mongodb';
 
-const uri = 'mongodb+srv://Lucas:Macrondemission@essencinator.bcekz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
-
-let client = new MongoClient(uri);
+let client = new MongoClient(process.env.DB_CONN_STRING as string);
 
 async function insertMongo(jsonContent: string){
   try {
     await client.connect();
-    const db = client.db('current_data');
-    const collection = db.collection('test');
+    const db = client.db(process.env.DB_NAME);
+    const collection = db.collection(process.env.COLLECTION_NAME_PROD as string);
     const insertResult = await collection.insertMany(JSON.parse(jsonContent));
     console.log(`Inserted ${insertResult.insertedCount} documents`);
   } finally {
@@ -21,10 +19,10 @@ async function insertMongo(jsonContent: string){
 async function dropMongo(){
   try {
     await client.connect();
-    const db = client.db('current_data');
-    const collection = db.collection('test');
+    const db = client.db(process.env.DB_NAME);
+    const collection = db.collection(process.env.COLLECTION_NAME_PROD as string);
     const deleteResult = await collection.deleteMany({});
-    console.log("Deleted " + deleteResult.deletedCount + " documents");
+    console.log(`Deleted ${deleteResult.deletedCount} documents`);
   } finally {
     await client.close();
   }
