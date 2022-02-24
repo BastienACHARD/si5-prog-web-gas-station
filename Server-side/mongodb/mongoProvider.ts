@@ -8,12 +8,11 @@ let client = new MongoClient(uri);
 
 async function insertMongo(jsonContent: string){
   try {
-    let client = new MongoClient(uri);
     await client.connect();
     const db = client.db('current_data');
     const collection = db.collection('test');
-    const insertResult = await collection.insertMany(JSON.parse(jsonContent).pdv_liste.pdv);
-    console.log(`${insertResult.insertedCount} documents were inserted`);
+    const insertResult = await collection.insertMany(JSON.parse(jsonContent));
+    console.log(`Inserted ${insertResult.insertedCount} documents`);
   } finally {
     await client.close();
   }
@@ -21,7 +20,6 @@ async function insertMongo(jsonContent: string){
 
 async function dropMongo(){
   try {
-    let client = new MongoClient(uri);
     await client.connect();
     const db = client.db('current_data');
     const collection = db.collection('test');
