@@ -2,6 +2,7 @@ import React, {  useState } from 'react';
 import './App.css';
 import "leaflet/dist/leaflet.css"
 import {Map} from './Map';
+import Select from 'react-select';
 
 import Station from './Stations';
 import SearchBar from './SearchBar'
@@ -71,25 +72,25 @@ async function  getByCity(d:any)  {
 
 async function fetchUpcoming(d:any)  {
         let stations:Station[]=[];
-
+        console.log(d)
   try {
     let response = await fetch(
-      'http://localhost:8080/api/stations/current/byCity/'+d
+      'http://localhost:8080/api/stations/current/byCity/'+d.value
     );
      
           let responseJson = await response.json();
-
+  console.log(responseJson)
   responseJson.map((x:any)=>{
       let station: Station=new Station();
-      station._latitude=x._latitude;
+      station._latitude=x.latitude;
       station._id=x._id;
-      station._longitude=x._longitude;
+      station._longitude=x.longitude;
       station._adresse=x.adresse;
       station._ville=x.ville;
-      if(x.prix!=undefined){
-      x.prix.map((price:any)=> {     
-          station._valeur=price._valeur;
-          station._nom=price._nom;
+      if(x.listeDePrix!=undefined){
+      x.listeDePrix.map((price:any)=> {     
+          station._valeur=price.valeur;
+          station._nom=price.nom;
 
 
       } )}
@@ -116,7 +117,7 @@ async function fetchUpcoming(d:any)  {
         let stationsByType:Station[]=[];
 
      return () => {
-
+console.log(dataByType)
     dataByType.map((x:any)=>{
       if(x._nom===typee){
       let station: Station=new Station();
@@ -189,24 +190,36 @@ stationsByPrice.push(station)
       
   
   return (
-    <>
-        <SearchBar  setSelectedOption={setSelectedOption} selectedOption={selectedOption} />
+    < div style={{backgroundColor: "#abbdff",height:"1000px"}}>
 
-<Header />
-     <input type="text" onChange={getData}/>
-     <button onClick={ (()=> getByCity(selectedOption))} >display stations by city</button> 
-     <select onChange={getType}>
-            {options.map((option) => (
-              <option value={option.value}>{option.label}</option>
-            ))}
-      </select>
-      <button onClick={ getByType(type)} >display stations by type</button> 
-      <button onClick={ getByPrice(type)} >display stations by price</button> 
-      <button onClick={ cancelAll()} >Cancel all</button> 
-      
-       <Map list={data} list1={moins} />
+    <Header />
 
-     </>
+
+
+
+             <div style={{  float:"left",width:"900px", marginTop:'50px'}} >
+               <div style={{marginBottom:'50px'}} >
+               <SearchBar setSelectedOption={setSelectedOption} selectedOption={selectedOption}/>
+               <div style={{ width:"300px" ,marginBottom:'50px'}}>
+               <Select onChange={getType} placeholder="Types" options={options}  />
+               </div>
+
+               <button  onClick={ (()=> getByCity(selectedOption))}>OK</button> 
+               <button  onClick={ cancelAll()} >X</button> 
+               </div>
+
+
+       
+ <button onClick={ getByType(type)} >display stations by type</button> 
+ <button onClick={ getByPrice(type)} >display stations by price</button> 
+
+      </div>
+           <Map  style={{  float:"right"}} list={data} list1={moins} >
+
+             </Map>
+         
+
+     </div>
 
 
   );
@@ -216,3 +229,4 @@ stationsByPrice.push(station)
 
 
 export default App;
+
