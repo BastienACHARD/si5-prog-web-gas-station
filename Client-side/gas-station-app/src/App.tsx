@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import './App.css';
 import "leaflet/dist/leaflet.css"
 import {Map} from './Map';
 
 import Station from './Stations';
-
-import Header from './Header'
+import SearchBar from './SearchBar'
+import Cities from './Cities.json';
+import Header from './Header';
 
 
 
@@ -19,6 +20,7 @@ function App() {
   const [type, setType] = useState();
     const [price, setPrice] = useState([] as any[]);
 
+  let [selectedOption, setSelectedOption] = useState<any>('');
 
 
 
@@ -188,9 +190,11 @@ stationsByPrice.push(station)
   
   return (
     <>
+        <SearchBar  setSelectedOption={setSelectedOption} selectedOption={selectedOption} />
+
 <Header />
      <input type="text" onChange={getData}/>
-     <button onClick={ (()=> getByCity(dataa))} >display stations by city</button> 
+     <button onClick={ (()=> getByCity(selectedOption))} >display stations by city</button> 
      <select onChange={getType}>
             {options.map((option) => (
               <option value={option.value}>{option.label}</option>

@@ -25,7 +25,6 @@ const blueIcon = new Icon({
 
 
  const Map = (props:any) => {
-     console.log(props.list1)
 
     return (
         <MapContainer style={{ height: '650px', width: '1500px' }} center={[42.585444, 13.257684]} zoom={6} >
