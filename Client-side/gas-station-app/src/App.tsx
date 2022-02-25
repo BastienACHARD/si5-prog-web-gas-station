@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, { useState, useEffect } from "react";
 import './App.css';
 import "leaflet/dist/leaflet.css"
 import {Map} from './Map';
@@ -20,6 +20,13 @@ function App() {
   let [selectedOption, setSelectedOption] = useState<any>('');
 
 
+    const [darkMode, setDarkMode] = useState(false);
+    const toggleDarkMode = () => setDarkMode(darkMode ? false : true);
+   let dark =   Boolean(darkMode).toString()
+
+
+    localStorage.setItem("DARK_MODE", dark);
+    const storedDarkMode = localStorage.getItem(dark);
 
   const options = [
   {
@@ -44,6 +51,9 @@ function getType(type:any){
   
     setType(type.value)
 }
+useEffect(() => {
+  console.log(`Is in dark mode? ${darkMode}`);
+}, [darkMode]);
 
 
   function getData(val:any)
@@ -92,7 +102,10 @@ async function fetchUpcoming(d:any)  {
       x.listeDePrix.map((price:any)=> {     
           station._valeur=price.valeur;
           station._nom=price.nom;
+          let darkMode = true;  
 
+          darkMode = !darkMode; // false
+      
 
       } )}
             stations.push(station)
@@ -190,7 +203,10 @@ stationsByPrice.push(station)
       
   
   return (
-    < div style={{backgroundColor: "#abbdff",height:"1200px", width:'1700px'}}>
+  <div className="App" data-theme={darkMode ? "dark" : "light"}>
+  <h1></h1>
+  <h2></h2>
+
 
     <Header />
 
@@ -203,7 +219,9 @@ stationsByPrice.push(station)
                <SearchBar  style={{ float:"left"}}  setSelectedOption={setSelectedOption} selectedOption={selectedOption}/>
                <div style={{ float:"right", width:'200px',marginTop:'-38px'}} >
                <Button  variant="light"  onClick={ (()=> getByCity(selectedOption))}><AiOutlineSearch/></Button> 
-
+               <button onClick={toggleDarkMode}>
+  light
+</button>
                </div>
                </div>
 

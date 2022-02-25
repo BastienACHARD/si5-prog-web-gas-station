@@ -73,3 +73,22 @@ a:hover {
 #clearBtn {
     cursor: pointer;
 }
+
+
+:root {
+    --bg-color: #abbdff;
+    --text-color: #def3f6;
+  }
+  
+  [data-theme="dark"] {
+    --bg-color: #def3f6;
+    --text-color: #abbdff;
+  }
+  
+  .App {
+    font-family: sans-serif;
+    text-align: center;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+  
