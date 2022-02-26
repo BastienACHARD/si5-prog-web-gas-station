@@ -66,6 +66,7 @@ stationApi.post('/current/filter', async (req, res) => {
     if (!atLeastOneFilter){
       filterString="{}";
     };
+
     // filter with mongoDB
     let filteredStations = (await getStationCollection()?.find(JSON.parse(filterString)).toArray()) as unknown as Station[];
 
@@ -78,7 +79,7 @@ stationApi.post('/current/filter', async (req, res) => {
       resultStations = sortStationsByDistance(resultStations, req.body.latitude, req.body.longitude)
     }
 
-    res.status(200).json(JSON.stringify(resultStations));
+    res.status(200).json(resultStations);
   } catch (err) {
     res.status(404).json(err);
   }
