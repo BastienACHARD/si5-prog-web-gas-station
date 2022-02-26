@@ -33,7 +33,7 @@ stationApi.post('/current/filter', async (req, res) => {
     const filter = req.body.filter;
     let filterString = '{"$and": [';
     if (filter !==undefined){
-      if (filter.fuels !== undefined){
+      if (filter.fuels !== undefined && filter.fuels.length > 0){
         filterString+='{"$and" :[';
         filter.fuels.forEach((fuel : string) => {
           filterString+=`{"listeDePrix.nom" : "${fuel}"},`
@@ -41,7 +41,7 @@ stationApi.post('/current/filter', async (req, res) => {
         filterString = filterString.slice(0, -1);
         filterString+="]},";
       }
-      if (filter.services !== undefined){
+      if (filter.services !== undefined && filter.services.length > 0){
         filterString+='{"$and" :['
         filter.services.forEach((service : string) => {
           filterString+=`{"services" : "${service}"},`
@@ -49,7 +49,7 @@ stationApi.post('/current/filter', async (req, res) => {
         filterString = filterString.slice(0, -1);
         filterString+="]},"
       }
-      if (filter.prices !== undefined){
+      if (filter.prices !== undefined &&  filter.prices.length > 0){
         filterString+='{"$and" :['
         filter.prices.forEach((arr : any) => {
           filterString+=`{"listeDePrix" : {"$elemMatch" : {"nom" : "${arr[0]}", "valeur" : {"$lt" : ${arr[1]}}}}},`;
@@ -72,7 +72,7 @@ stationApi.post('/current/filter', async (req, res) => {
     } else {
       resultStations = sortStationsByDistance(resultStations, req.body.latitude, req.body.longitude)
     }
-    
+
     res.status(200).json(JSON.stringify(resultStations));
   } catch (err) {
     res.status(404).json(err);
