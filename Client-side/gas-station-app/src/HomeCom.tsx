@@ -14,6 +14,8 @@ import { ThemeContext } from "./theme";
 import { CgSun } from "react-icons/cg";
 import { HiMoon } from "react-icons/hi";
 import styled from "styled-components";
+import  geolocation from "react-geolocated"
+import { useEffect } from 'react';
 
 export {HomeCom}
 function HomeCom() {
@@ -23,7 +25,19 @@ function HomeCom() {
   let [moins, setMoins] = useState( new Station() );
   const [type, setType] = useState();
   let [selectedOption, setSelectedOption] = useState<any>('');
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  const { theme, toggleTheme ,isDark} = useContext(ThemeContext);
+  const [lat, setLat] = useState('');
+  const [long, setLong] = useState('');
+
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      "latitude":lat,
+      "longitude":long,
+      "radiusInMeter":1200
+  })
+};
 
   const Toggle = styled.button`
   cursor: pointer;
@@ -59,30 +73,33 @@ function HomeCom() {
   },
 ];
 
+
 function getType(type:any){
     setType(type.value)
 }
+useEffect(() => {
+  setTimeout(() => {
+    navigator.geolocation.getCurrentPosition(getPosition);  }, 2000);
+   
+});
+
+
 async function fetchClosestStations()  {
+
   let closestStations:Station[]=[];    
 
-  const requestOptions = {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            "latitude":43.697745,
-            "longitude":7.269276,
-            "radiusInMeter":1100
-        })
-      };
+    
+
   try {
+    
     let response = await fetch(
       'http://localhost:8080/api/stations/current/byDistance/',requestOptions
     );
-     
+  
           let responseJson = await response.json();
           let listOfStations=JSON.parse(responseJson);
+
           listOfStations.map((x:any)=>{
-            console.log(x)
             let station: Station=new Station();
             station._latitude=x.latitude;
             station._id=x._id;
@@ -105,7 +122,14 @@ async function fetchClosestStations()  {
     console.error(error);
   }
   }
+  function getPosition(position:any) {
+    setLat(position.coords.latitude);
+    setLong( position.coords.longitude);
+     localStorage.setItem("latitude",JSON.stringify(lat));
+     localStorage.setItem("longitude",JSON.stringify(long));
 
+
+  }
 async function  getByCity(d:any)  {
    let stations= await fetchUpcoming(d);
    return stations;
@@ -113,6 +137,7 @@ async function  getByCity(d:any)  {
 
 async function fetchUpcoming(d:any)  {
   let stations:Station[]=[];    
+
   const requestOptions = {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -123,9 +148,8 @@ async function fetchUpcoming(d:any)  {
       'http://localhost:8080/api/stations/current/byCity/',requestOptions
     );
      
-          let responseJson = await response.json();
-  console.log(responseJson)
-  responseJson.map((x:any)=>{
+    let responseJson = await response.json();
+     responseJson.map((x:any)=>{
       let station: Station=new Station();
       station._latitude=x.latitude;
       station._id=x._id;
@@ -153,7 +177,6 @@ async function fetchUpcoming(d:any)  {
         let stationsByType:Station[]=[];
 
      return () => {
-console.log(dataByType)
     dataByType.map((x:any)=>{
       if(x._nom===typee){
       let station: Station=new Station();
@@ -246,10 +269,10 @@ stationsByPrice.push(station)
                </div>
 
                <div style={{  width:'700px',float:"right"}} >
-                <Button variant="light" style={{  marginLeft:"-355px"}}   onClick={ getByType(type)} >Go</Button> 
-                    <Button variant="light" style={{  marginLeft:"100px"}}  onClick={ getByPrice(type)} >Display stations by price</Button> 
-                    <Button  variant="light"  style={{  marginLeft:"120px"}}  onClick={ cancelAll()} >Clear All</Button> 
-                    <Button  variant="light"  style={{  marginLeft:"120px"}}  onClick={ (()=> fetchClosestStations())} >X</Button> 
+                <Button variant="light" style={{  marginLeft:"-410px"}}   onClick={ getByType(type)} >Go</Button> 
+                    <Button variant="light" style={{  marginLeft:"80px"}}  onClick={ getByPrice(type)} >Stations by price</Button> 
+                    <Button  variant="light"  style={{  marginLeft:"80px"}}  onClick={ cancelAll()} >Clear All</Button> 
+                    <Button  variant="light"  style={{  marginLeft:"80px"}}  onClick={ (()=> fetchClosestStations())} >Closest Station</Button> 
 
                 </div>
 
@@ -261,7 +284,7 @@ stationsByPrice.push(station)
 
       </div>
 
-          <Map tyle={{marginTop:'-100px'}} list={data} list1={moins} ></Map>
+          <Map tyle={{marginTop:'-100px'}} list={data} list1={moins} lat={lat} long={long} ></Map>
          
      </div>
         )

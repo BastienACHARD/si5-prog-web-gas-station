@@ -26,7 +26,6 @@ const blueIcon = new Icon({
 
 
  const Map = (props:any) => {
-        console.log(props)
     return (
         <MapContainer style={{ height: '500px', width: '1500px' ,marginLeft:'80px'}} center={[43.697745, 7.269276]} zoom={8} >
             <TileLayer
@@ -42,7 +41,7 @@ const blueIcon = new Icon({
 
 <FloatButton
         title={"My Position"}
-        markerPosition={[43.697745, 7.269276 ]}
+        markerPosition={[props.lat, props.long]}
         description="This is a custom description!"
       />
         </MapContainer>
