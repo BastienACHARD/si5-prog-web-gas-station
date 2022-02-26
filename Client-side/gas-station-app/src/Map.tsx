@@ -28,7 +28,7 @@ const blueIcon = new Icon({
  const Map = (props:any) => {
 
     return (
-        <MapContainer style={{ height: '650px', width: '1700px' }} center={[42.585444, 13.257684]} zoom={6} >
+        <MapContainer style={{ height: '600px', width: '1500px' ,marginLeft:'80px'}} center={[42.585444, 13.257684]} zoom={6} >
             <TileLayer
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />

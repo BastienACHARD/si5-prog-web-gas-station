@@ -1,6 +1,10 @@
+
+
 .leaflet-container {
     width: 100vw;
     height: 100vh;
+    z-index: 2;
+    position: "relative"
 }
 
 .searchInputs {
@@ -44,10 +48,14 @@ input:focus {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     overflow: hidden;
     overflow-y: auto;
+    z-index: '1';
+    position: "relative"
 }
 
 .dataResult::-webkit-scrollbar {
     display: none;
+    z-index: '1';
+    position: "relative"
 }
 
 .dataResult .dataItem {
@@ -60,6 +68,8 @@ input:focus {
 
 .dataItem p {
     margin-left: 10px;
+    z-index: '1';
+    position: "relative"
 }
 
 a {
@@ -73,22 +83,3 @@ a:hover {
 #clearBtn {
     cursor: pointer;
 }
-
-
-:root {
-    --bg-color: #abbdff;
-    --text-color: #def3f6;
-  }
-  
-  [data-theme="dark"] {
-    --bg-color: #def3f6;
-    --text-color: #abbdff;
-  }
-  
-  .App {
-    font-family: sans-serif;
-    text-align: center;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-  }
-  

@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import typescript from "typescript";
-// eslint-disable-next-line @typescript-eslint/no-unused-expressions
-typescript;
+
 type Theme = "light" | "dark";
 type ThemeContext = { theme: Theme; toggleTheme: () => void };
 
@@ -15,8 +13,10 @@ export const ThemeProvider: React.FC = ({ children }) => {
     setTheme(theme === "light" ? "dark" : "light");
   };
 
-  const color = theme === "light" ? "#333" : "#FFF";
-  const backgroundColor = theme === "light" ? "#FFF" : "#333";
+  const color = theme === "light" ? "#abbdff"
+  : "#282c36" ;
+   const backgroundColor = theme === "light" ?  "#abbdff":"#282c36" 
+ ;
 
   document.body.style.color = color;
   document.body.style.backgroundColor = backgroundColor;
