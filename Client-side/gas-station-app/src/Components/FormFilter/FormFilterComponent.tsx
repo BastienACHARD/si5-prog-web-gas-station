@@ -31,9 +31,9 @@ export const FormFilterComponent: FC = () => {
         const filter: Filter = {
             latitude: 48.856614,
             longitude: 2.3522219,
-            raduisInMeter: 30000,
-            fuels: [formData.fuels],
-            services: [formData.services],
+            raduisInMeter: 1000,
+            fuels: formData.fuels ? [formData.fuels] : [],
+            services: formData.services ? [formData.services] : [],
             sortByPrice: formData.sortByPrice ? true : false
         };
         context!.updateFilter(filter);
