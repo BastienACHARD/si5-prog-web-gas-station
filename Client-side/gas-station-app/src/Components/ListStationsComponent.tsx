@@ -1,27 +1,22 @@
 import { FC, useContext, useEffect } from "react";
 import { StationCtx } from "../Contexts/stationContext";
+import {FormFilterComponent} from './FormFilterComponent';
 
 
 const ListStationsComponent : FC = () => {
     const context = useContext(StationCtx);
     useEffect(()=> context!.updateStations());
-    const stations = context ? context.stations : undefined;
-    const data = stations ? stations.map(item => item) : [];
+    const data = context!.stations;
+    const stations = data.map(station => station);
     return (
     <div>
+        <FormFilterComponent/>
         <table>
-            <thead>
-                <tr>
-                    <th>Adresse</th>
-                    <th>Ville</th>
-                    <th>Latitude</th>
-                    <th>Longitude</th>
-                </tr>
-            </thead>
             <tbody>
-                {data.map(item => {
+                {stations.map((item, index) => {
                     return (
                         <tr>
+                            <td>{index}</td>
                             <td>{item.adresse}</td>
                             <td>{item.ville}</td>
                             <td>{item.latitude}</td>
