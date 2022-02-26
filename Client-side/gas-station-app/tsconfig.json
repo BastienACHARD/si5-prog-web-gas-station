@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "isolatedModules": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "target": "es5",
     "lib": [
       "dom",
