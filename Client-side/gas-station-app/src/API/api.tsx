@@ -4,7 +4,6 @@ import { Station } from "../Models/Stations";
 
 const instance = axios.create({
   baseURL: 'http://localhost:8080/api/',
-  timeout: 10000,
   headers: { 'X-Custom-Header': 'foobar' }
 });
 
@@ -35,15 +34,17 @@ export const getFilterData = async (lat: number, long: number, radius: number, f
     const body = { 
       'latitude': lat,
       'longitude': long,
-      'raduisInMeter': radius,
+      'radiusInMeter': radius,
       'filter': {
         'fuels': fuel,
         'services': services,
         'sortByPrice': sortByPrice
       }
-   };
+    };
     const response = await instance.post('stations/current/filter', body);
-    const data: Station[] = response.data.map((item: { latitude: number; longitude: number; adresse: string; ville: string; services: string[]; listeDePrix: Prix[] }) => {
+    console.log(response.data);
+    const result = JSON.parse(response.data);
+    const data: Station[] = result.map((item: { latitude: number; longitude: number; adresse: string; ville: string; services: string[]; listeDePrix: Prix[] }) => {
       return ({
         latitude: item.latitude,
         longitude: item.longitude,

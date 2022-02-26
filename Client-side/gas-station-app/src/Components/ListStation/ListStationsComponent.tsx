@@ -1,7 +1,7 @@
 import { FC, useContext, useEffect } from "react";
-import { StationCtx } from "../Contexts/stationContext";
-import { FormFilterComponent } from './FormFilterComponent';
-import { StationComponent } from './StationComponent';
+import { StationCtx } from "../../Contexts/stationContext";
+import { FormFilterComponent } from '../FormFilter/FormFilterComponent';
+import { StationComponent } from '../StationCard/StationComponent';
 
 
 const ListStationsComponent: FC = () => {
@@ -26,7 +26,8 @@ const ListStationsComponent: FC = () => {
                                     longitude={station.longitude}
                                     adresse={station.adresse}
                                     ville={station.ville}
-                                    listeDePrix={station.listeDePrix} /></td>
+                                    listeDePrix={station.listeDePrix} />
+                                </td>
                             </tr>
                         )
                     })}

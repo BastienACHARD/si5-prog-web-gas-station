@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import "./CSS/LeafletMap.css";
-import { StationCtx } from '../Contexts/stationContext';
+import "./LeafletMap.css";
+import { StationCtx } from '../../Contexts/stationContext';
 
 const LeafletMap: React.FC = () => {
     const context = useContext(StationCtx);

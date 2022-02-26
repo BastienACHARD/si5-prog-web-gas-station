@@ -1,8 +1,8 @@
 // Map
-import LeafletMap from './Components/LeafletMap';
+import LeafletMap from './Components/Map/LeafletMap';
 
 // Components
-import ListStationsComponent from './Components/ListStationsComponent';
+import ListStationsComponent from './Components/ListStation/ListStationsComponent';
 import { Header } from './Components/Header';
 
 // Context
