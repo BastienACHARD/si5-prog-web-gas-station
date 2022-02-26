@@ -2,6 +2,8 @@ import express, { Router } from 'express';
 import { Station } from '../models/Station';
 import { getStationCollection } from '../mongodb/mongoClient';
 import { getPath } from '../openroute/openrouteClient';
+import { averagePrice } from '../utils/averagePrice';
+import { fuels_name } from '../utils/fuels_name';
 import { getStationInPerimeters } from '../utils/geography';
 import { sortStationsByDistance, sortStationsByPrice } from '../utils/sort';
 
@@ -85,9 +87,10 @@ stationApi.post('/current/filter', async (req, res) => {
   }
 });
 
-stationApi.get('/test', (req, res) => {
+stationApi.get('/test', async (req, res) => {
   try{
-    res.status(200).json(getPath("43.5834188,7.1208154", "43.5834188,7.1208159"));
+    let stations = ((await getStationCollection()?.find({}).toArray()) as unknown as Station[]);
+    res.status(200).json(averagePrice(stations, fuels_name));
   } catch (err) {
     res.status(404).json(err);
   }
