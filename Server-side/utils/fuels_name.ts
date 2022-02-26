@@ -1,0 +1,1 @@
+export const fuels_name=["Gazole", "E85", "E10", "SP98", "GPLc"] 
