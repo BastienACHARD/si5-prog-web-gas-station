@@ -14,7 +14,7 @@ export const Header: FC<Props> = ({ toggleTheme }) => {
 
     return (
         <Container>
-            Notre App
+            <h1>Gazify</h1>
 
             <Switch
             onChange={toggleTheme}

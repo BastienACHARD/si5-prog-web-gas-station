@@ -17,7 +17,7 @@ export const StationProvider: FC = ({ children }) => {
     const [filter, setFilter] = useState<Filter>({
         latitude: 48.856614,
         longitude: 2.3522219,
-        raduisInMeter: 1000,
+        raduisInMeter: 10000,
         fuels: [],
         services: [],
         sortByPrice: false

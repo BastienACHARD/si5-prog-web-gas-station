@@ -35,15 +35,13 @@ const App = () => {
     <StationProvider>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <Header toggleTheme={toggleTheme}/>
-        <table>
-          <tbody>
-            <tr>
-              <td className='listStation'><ListStationsComponent /></td>
-              <td className='Map'><LeafletMap /></td>
-            </tr>
-          </tbody>
-        </table>
+        <Header toggleTheme={toggleTheme} />
+        <div className='listStation'>
+          <ListStationsComponent />
+        </div>
+        <div className='map'>
+          <LeafletMap />
+        </div>
       </ThemeProvider>
     </StationProvider>
   );

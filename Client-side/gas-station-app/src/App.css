@@ -1,0 +1,11 @@
+.listStation {
+    float:left;
+    width:22%;
+    height: 93vh;
+    overflow-y: scroll;
+}
+
+.map {
+    margin-left:22%;
+    display: flex;
+}
