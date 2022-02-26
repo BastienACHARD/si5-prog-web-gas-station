@@ -23,9 +23,7 @@ function getStationInPerimeters(stations : Station[], lat : number, long : numbe
             resStations.push(station);
         }
     });
-    return resStations.sort((s1, s2) => {
-        return measureDistance(lat, long, parseFloat(s1.latitude), parseFloat(s1.longitude)) - measureDistance(lat, long, parseFloat(s2.latitude), parseFloat(s2.longitude));
-    });
+    return resStations;
 }
 
 export { measureDistance, getStationInPerimeters }
