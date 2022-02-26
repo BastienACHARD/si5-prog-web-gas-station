@@ -3,6 +3,7 @@ import { Station } from '../models/Station';
 import { getStationCollection } from '../mongodb/mongoClient';
 import { getPath } from '../openroute/openrouteClient';
 import { getStationInPerimeters } from '../utils/geography';
+import { sortStationsByDistance, sortStationsByPrice } from '../utils/sort';
 
 const stationApi = Router();
 
@@ -15,6 +16,7 @@ stationApi.get('/current/all', async (req, res) => {
 });
 
 stationApi.post('/current/byCity', async (req, res) => {
+  console.log("heyo");
   try {
     let city = req.body.city;
     //req.params.city
@@ -24,9 +26,8 @@ stationApi.post('/current/byCity', async (req, res) => {
   }
 });
 
-stationApi.post('/current/byDistance/', async (req, res) => {
+stationApi.post('/current/filter', async (req, res) => {
   try{
-
     // filter nightmare to build mongo request, made by Lucas AUBRON
     // recommended to drink 2 to 3 cup of strong coffee before reading this
     const filter = req.body.filter;
@@ -66,6 +67,12 @@ stationApi.post('/current/byDistance/', async (req, res) => {
     // filter the survivors by distance with hand made tools and a bit of trigonometry
     let resultStations = getStationInPerimeters(filteredStations, req.body.latitude, req.body.longitude, req.body.radiusInMeter);
 
+    if (filter.sortByPrice){
+      resultStations = sortStationsByPrice(resultStations, filter.fuels);
+    } else {
+      resultStations = sortStationsByDistance(resultStations, req.body.latitude, req.body.longitude)
+    }
+    
     res.status(200).json(JSON.stringify(resultStations));
   } catch (err) {
     res.status(404).json(err);
