@@ -4,15 +4,15 @@ import { createContext, useState, FC } from "react";
 import { Filter } from "../Models/Filter";
 
 interface contextType {
-    stations : Station[],
-    filter : Filter,
+    stations: Station[],
+    filter: Filter,
     updateStations: () => void,
     updateFilter: (filter: Filter) => void
 }
 
 export const StationCtx = createContext<contextType | null>(null);
 
-export const StationProvider : FC = ( { children } ) => {
+export const StationProvider: FC = ({ children }) => {
     const [stations, setStations] = useState<Station[]>([]);
     const [filter, setFilter] = useState<Filter>({
         latitude: 48.856614,
@@ -31,20 +31,20 @@ export const StationProvider : FC = ( { children } ) => {
             ).then(res => {
             setStations(res ? res : []);
         });*/
-      }
+    }
 
     const updateFilter = (filter: Filter) => {
         console.log(filter);
         setFilter(filter);
     }
 
-      const value: contextType = {stations, filter, updateStations, updateFilter};
+    const value: contextType = { stations, filter, updateStations, updateFilter };
 
     return (
         <StationCtx.Provider value={value}>
             {children}
         </StationCtx.Provider>
     );
-  };
+};
 
 

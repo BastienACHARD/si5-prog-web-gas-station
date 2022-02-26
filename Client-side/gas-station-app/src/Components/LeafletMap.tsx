@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import "./LeafletMap.css";
+import "./CSS/LeafletMap.css";
 import { StationCtx } from '../Contexts/stationContext';
 
 const LeafletMap: React.FC = () => {
@@ -22,10 +22,10 @@ const LeafletMap: React.FC = () => {
                 return (
                     <Marker position={[station.latitude, station.longitude]} key={index}>
                         <Popup key={index}>
-                            {station.adresse} 
-                            <br /> 
-                            {station.ville} 
-                            <br /> 
+                            {station.adresse}
+                            <br />
+                            {station.ville}
+                            <br />
                             {station.listeDePrix.map(price => {
                                 if (filter.fuels && filter.fuels[0] === price.nom) {
                                     return (

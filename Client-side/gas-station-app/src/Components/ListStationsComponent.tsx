@@ -1,32 +1,38 @@
 import { FC, useContext, useEffect } from "react";
 import { StationCtx } from "../Contexts/stationContext";
-import {FormFilterComponent} from './FormFilterComponent';
+import { FormFilterComponent } from './FormFilterComponent';
+import { StationComponent } from './StationComponent';
 
 
-const ListStationsComponent : FC = () => {
+const ListStationsComponent: FC = () => {
+    // Hooks
     const context = useContext(StationCtx);
-    useEffect(()=> context!.updateStations());
+    useEffect(() => context!.updateStations());
+
+    // Variables
     const data = context!.stations;
     const stations = data.map(station => station);
+
     return (
-    <div>
-        <FormFilterComponent/>
-        <table>
-            <tbody>
-                {stations.map((item, index) => {
-                    return (
-                        <tr>
-                            <td>{index}</td>
-                            <td>{item.adresse}</td>
-                            <td>{item.ville}</td>
-                            <td>{item.latitude}</td>
-                            <td>{item.longitude}</td>
-                        </tr>
-                    )
-                })}
-            </tbody>
-        </table>
-    </div>
+        <div>
+            <FormFilterComponent />
+            <table>
+                <tbody>
+                    {stations.map((station) => {
+                        return (
+                            <tr>
+                                <td><StationComponent
+                                    latitude={station.latitude}
+                                    longitude={station.longitude}
+                                    adresse={station.adresse}
+                                    ville={station.ville}
+                                    listeDePrix={station.listeDePrix} /></td>
+                            </tr>
+                        )
+                    })}
+                </tbody>
+            </table>
+        </div>
     );
 }
 
