@@ -18,10 +18,10 @@ const ListStationsComponent: FC = () => {
             <FormFilterComponent />
             <table>
                 <tbody>
-                    {stations.map((station) => {
+                    {stations.map((station, index) => {
                         return (
                             <tr>
-                                <td><StationComponent
+                                <td><StationComponent key={index}
                                     latitude={station.latitude}
                                     longitude={station.longitude}
                                     adresse={station.adresse}
