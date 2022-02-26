@@ -16,7 +16,6 @@ stationApi.get('/current/all', async (req, res) => {
 });
 
 stationApi.post('/current/byCity', async (req, res) => {
-  console.log("heyo");
   try {
     let city = req.body.city;
     //req.params.city
@@ -32,8 +31,10 @@ stationApi.post('/current/filter', async (req, res) => {
     // recommended to drink 2 to 3 cup of strong coffee before reading this
     const filter = req.body.filter;
     let filterString = '{"$and": [';
+    let atLeastOneFilter = false;
     if (filter !==undefined){
       if (filter.fuels !== undefined && filter.fuels.length > 0){
+        atLeastOneFilter = true;
         filterString+='{"$and" :[';
         filter.fuels.forEach((fuel : string) => {
           filterString+=`{"listeDePrix.nom" : "${fuel}"},`
@@ -42,6 +43,7 @@ stationApi.post('/current/filter', async (req, res) => {
         filterString+="]},";
       }
       if (filter.services !== undefined && filter.services.length > 0){
+        atLeastOneFilter = true;
         filterString+='{"$and" :['
         filter.services.forEach((service : string) => {
           filterString+=`{"services" : "${service}"},`
@@ -50,6 +52,7 @@ stationApi.post('/current/filter', async (req, res) => {
         filterString+="]},"
       }
       if (filter.prices !== undefined &&  filter.prices.length > 0){
+        atLeastOneFilter = true;
         filterString+='{"$and" :['
         filter.prices.forEach((arr : any) => {
           filterString+=`{"listeDePrix" : {"$elemMatch" : {"nom" : "${arr[0]}", "valeur" : {"$lt" : ${arr[1]}}}}},`;
@@ -60,7 +63,9 @@ stationApi.post('/current/filter', async (req, res) => {
     }
     filterString = filterString.slice(0, -1);
     filterString+="]}";
-
+    if (!atLeastOneFilter){
+      filterString="{}";
+    };
     // filter with mongoDB
     let filteredStations = (await getStationCollection()?.find(JSON.parse(filterString)).toArray()) as unknown as Station[];
 
