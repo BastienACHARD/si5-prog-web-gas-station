@@ -4,6 +4,5 @@ export interface Filter {
     raduisInMeter: number,
     fuels: string[],
     services: string[],
-    prices: number[],
     sortByPrice: boolean
 }

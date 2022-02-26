@@ -20,7 +20,6 @@ export const StationProvider: FC = ({ children }) => {
         raduisInMeter: 30000,
         fuels: [],
         services: [],
-        prices: [],
         sortByPrice: false
     });
 

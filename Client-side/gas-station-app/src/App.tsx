@@ -1,6 +1,3 @@
-// imports
-import React from 'react';
-
 // Map
 import LeafletMap from './Components/LeafletMap';
 

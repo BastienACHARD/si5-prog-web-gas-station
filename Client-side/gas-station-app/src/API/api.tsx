@@ -30,7 +30,7 @@ export const getAllData = async () => {
 }
 
 // filtrer les données : sous la forme d'un post
-export const getFilterData = async (lat: number, long: number, radius: number, fuel: string[], services: string[], prices: number[], sortByPrice: boolean) => {
+export const getFilterData = async (lat: number, long: number, radius: number, fuel: string[], services: string[], sortByPrice: boolean) => {
   try {
     const body = { 
       'latitude': lat,
@@ -39,7 +39,6 @@ export const getFilterData = async (lat: number, long: number, radius: number, f
       'filter': {
         'fuels': fuel,
         'services': services,
-        'prices': prices,
         'sortByPrice': sortByPrice
       }
    };

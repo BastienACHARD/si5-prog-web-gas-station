@@ -4,7 +4,6 @@ import "./CSS/LeafletMap.css";
 import { StationCtx } from '../Contexts/stationContext';
 
 const LeafletMap: React.FC = () => {
-
     const context = useContext(StationCtx);
     const filter = context!.filter;
     const data = context!.stations;

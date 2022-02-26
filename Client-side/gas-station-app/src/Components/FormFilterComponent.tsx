@@ -1,12 +1,16 @@
+// Imports
 import { FC, useContext } from "react";
-import { StationCtx } from "../Contexts/stationContext";
-import { Filter } from "../Models/Filter";
 import { useForm, SubmitHandler } from "react-hook-form";
+
+// Contexts
+import { StationCtx } from "../Contexts/stationContext";
+
+// Models
+import { Filter } from "../Models/Filter";
 
 interface FormModel {
     fuels: string,
     services: string,
-    //prices: number,
     sortByPrice: boolean
 }
 
@@ -27,7 +31,6 @@ export const FormFilterComponent: FC = () => {
             raduisInMeter: 30000,
             fuels: [formData.fuels],
             services: [formData.services],
-            prices: [],
             sortByPrice: formData.sortByPrice ? true : false
         };
         context!.updateFilter(filter);
