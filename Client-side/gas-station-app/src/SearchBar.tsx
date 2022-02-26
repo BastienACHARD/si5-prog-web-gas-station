@@ -2,8 +2,6 @@ import React from 'react';
 import Select from 'react-select';
 import Cities from './Cities.json'
 
-
-
 const SearchBar = (props:any) =>  {
   return (
     <div style={{  width:'200px',zIndex:10,position:"relative"}} className="App">
@@ -11,13 +9,8 @@ const SearchBar = (props:any) =>  {
         defaultValue={props.selectedOption}
                 onChange={props.setSelectedOption}
                 placeholder="City"
-       
-       options={Cities.map(e => ({ label: e.city, value: e.city}))}         
-                
-                 />
-  
-
-    </div>
+       options={Cities.map(e => ({ label: e.city, value: e.city}))}/>
+  </div>
   );}
 
   export default SearchBar;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Navbar, NavDropdown, Form, FormControl, Button, Nav } from 'react-bootstrap'
+import { Navbar, Nav } from 'react-bootstrap'
 import {
     BrowserRouter as Router,
     Route,
@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 
 import Home from './Home';
-
+import Logo from "./l.png"
 import Statistics from './Statistics';
 
 export default class NavComp extends Component {
@@ -18,11 +18,16 @@ export default class NavComp extends Component {
             <Router>
 
                     <Navbar bg="dark" variant={"dark"} expand="lg">
-                        <Navbar.Brand href="#">Gazify</Navbar.Brand>
+                    <img style={{width:"4%",height:"5%"}} src={Logo}></img>
+
+                        <Navbar.Brand style={{width:"6%",height:"5%"}} >
+                            
+                            <h2>Gazify</h2></Navbar.Brand>
                         <Navbar.Collapse id="navbarScroll">
+
                             <Nav
                                 className="mr-auto my-2 my-lg-0"
-                                style={{ maxHeight: '100px' }}
+                                style={{ maxHeight: '100px' ,marginLeft:"80%"}}
                                 navbarScroll
                             >
                                 <Nav.Link as={Link} to="/home">Home</Nav.Link>

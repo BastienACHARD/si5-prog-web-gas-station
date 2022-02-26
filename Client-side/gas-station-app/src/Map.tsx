@@ -4,7 +4,7 @@ import {TileLayer,MapContainer } from 'react-leaflet'
 import FloatButton from './FloatButton';
 
 // import React in our code
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 export {Map}
 const greenIcon = new Icon({
     iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
@@ -26,9 +26,9 @@ const blueIcon = new Icon({
 
 
  const Map = (props:any) => {
-
+        console.log(props)
     return (
-        <MapContainer style={{ height: '600px', width: '1500px' ,marginLeft:'80px'}} center={[42.585444, 13.257684]} zoom={6} >
+        <MapContainer style={{ height: '500px', width: '1500px' ,marginLeft:'80px'}} center={[43.697745, 7.269276]} zoom={8} >
             <TileLayer
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />

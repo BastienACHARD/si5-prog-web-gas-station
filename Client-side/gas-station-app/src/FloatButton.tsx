@@ -1,7 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import { useMap } from "react-leaflet";
-import L, { LeafletMouseEvent, Map } from "leaflet";
-import icon from 'leaflet/dist/images/marker-icon.png';
+import L from "leaflet";
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 
 let DefaultIcon = L.icon({
@@ -12,8 +11,6 @@ let DefaultIcon = L.icon({
 L.Marker.prototype.options.icon = DefaultIcon;
 class FloatButton extends React.Component<any, any> {
   helpDiv: HTMLButtonElement;
-
-
 
   createButtonControl() {
     const MapHelp = L.Control.extend({

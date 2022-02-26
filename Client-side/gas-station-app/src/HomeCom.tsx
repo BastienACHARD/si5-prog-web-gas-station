@@ -1,11 +1,10 @@
 
-
 import React, {  useState } from 'react';
 import './App.css';
 import "leaflet/dist/leaflet.css"
 import {Map} from './Map';
 import Select from 'react-select';
-import Station from './Stations';
+import Station from './Models/Stations';
 import SearchBar from './SearchBar'
 import { AiOutlineSearch } from "react-icons/ai";
 import { Button } from 'react-bootstrap';
@@ -19,15 +18,13 @@ import styled from "styled-components";
 export {HomeCom}
 function HomeCom() {
 
-
-
   const [data, setData] = useState([] as Station[]);
   let [dataByType, setDataByType] = useState([] as Station[]);
   let [moins, setMoins] = useState( new Station() );
-  const [dataa, setDataa] = useState();
   const [type, setType] = useState();
   let [selectedOption, setSelectedOption] = useState<any>('');
   const { theme, toggleTheme } = useContext(ThemeContext);
+
   const Toggle = styled.button`
   cursor: pointer;
   height: 40px;
@@ -42,6 +39,7 @@ function HomeCom() {
   }
   transition: all .5s ease;
   position: 'relative';`;
+
   const options = [
   {
     label: "Gazole",
@@ -60,32 +58,58 @@ function HomeCom() {
     value: "SP95",
   },
 ];
+
 function getType(type:any){
-  
     setType(type.value)
 }
+async function fetchClosestStations()  {
+  let closestStations:Station[]=[];    
 
-
-  function getData(val:any)
-  {
-
-        setDataa(val.target.value)
-
- }
-
+  const requestOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            "latitude":43.697745,
+            "longitude":7.269276,
+            "radiusInMeter":1100
+        })
+      };
+  try {
+    let response = await fetch(
+      'http://localhost:8080/api/stations/current/byDistance/',requestOptions
+    );
+     
+          let responseJson = await response.json();
+          let listOfStations=JSON.parse(responseJson);
+          listOfStations.map((x:any)=>{
+            console.log(x)
+            let station: Station=new Station();
+            station._latitude=x.latitude;
+            station._id=x._id;
+            station._longitude=x.longitude;
+            station._adresse=x.adresse;
+            station._ville=x.ville;
+            if(x.listeDePrix!==undefined){
+            x.listeDePrix.map((price:any)=> {     
+                station._valeur=price.valeur;
+                station._nom=price.nom;
+      
+      
+            } )}
+            closestStations.push(station)
+      
+             })
+          setDataByType(closestStations)
+          return setData(closestStations);
+  } catch (error) {
+    console.error(error);
+  }
+  }
 
 async function  getByCity(d:any)  {
-
-
    let stations= await fetchUpcoming(d);
    return stations;
    }
-
-  
-
-
-
-
 
 async function fetchUpcoming(d:any)  {
   let stations:Station[]=[];    
@@ -124,15 +148,6 @@ async function fetchUpcoming(d:any)  {
     console.error(error);
   }
   }
-
-
-
-
-
-
-
-
-
 
   function getByType(typee:any){
         let stationsByType:Station[]=[];
@@ -173,7 +188,6 @@ console.log(dataByType)
          }
   }
 
-
    function getByPrice(type:any){
    let stationsByPrice:Station[]=[];
      return () => {
@@ -208,13 +222,14 @@ stationsByPrice.push(station)
  return (
 
     
-             <div style={{height:"800px", width:'80%'}}>
+             <div style={{height:"1000px", width:'80%'}}>
 
      
 <Toggle style={{marginLeft:"120%",marginTop:"50px"}}  onClick={toggleTheme}>
       {theme === 'light' ? <HiMoon size={30} /> : <CgSun   size={30} />}
       </Toggle> 
-             <div style={{   width:'100%',marginBottom:'130px',marginLeft:'200px',marginTop:"-100px"}} >
+             <div style={{   width:'100%',marginBottom:'130px',marginLeft:'200px',marginTop:"-160px"}} >
+
              <div style={{  width:'320px',float:"left"}} >
 
                <SearchBar  style={{ float:"left"}}  setSelectedOption={setSelectedOption} selectedOption={selectedOption}/>
@@ -224,16 +239,18 @@ stationsByPrice.push(station)
                </div>
                </div>
 
-               <div style={{  width:'1200px' ,marginTop:"200px"}} >
+               <div style={{  width:'1400px' ,marginTop:"200px"}} >
                <div style={{  width:'200px',float:"left",zIndex:10,position:"relative"}} >
 
                <Select  onChange={getType} placeholder="Types" options={options}  className="App" />
                </div>
 
-               <div style={{  width:'610px',float:"right"}} >
-                <Button variant="light" style={{  marginLeft:"-200px"}}   onClick={ getByType(type)} >GO</Button> 
-                    <Button variant="light" style={{  marginLeft:"100px"}}  onClick={ getByPrice(type)} >display stations by price</Button> 
+               <div style={{  width:'700px',float:"right"}} >
+                <Button variant="light" style={{  marginLeft:"-355px"}}   onClick={ getByType(type)} >Go</Button> 
+                    <Button variant="light" style={{  marginLeft:"100px"}}  onClick={ getByPrice(type)} >Display stations by price</Button> 
                     <Button  variant="light"  style={{  marginLeft:"120px"}}  onClick={ cancelAll()} >Clear All</Button> 
+                    <Button  variant="light"  style={{  marginLeft:"120px"}}  onClick={ (()=> fetchClosestStations())} >X</Button> 
+
                 </div>
 
 
@@ -249,8 +266,6 @@ stationsByPrice.push(station)
      </div>
         )
 
-
 }
-
 
 export default HomeCom;
