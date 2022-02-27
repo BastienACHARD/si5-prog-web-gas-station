@@ -17,9 +17,9 @@ export const Header: FC<Props> = ({ toggleTheme, toggleMap, toggleGraph }) => {
     return (
         <Container>
             <h1>Gazify</h1>
-
-            <button onClick={toggleMap}>Map</button>
-            <button onClick={toggleGraph}>Statistiques</button>
+            
+            <button onClick={toggleMap}><h1>Map</h1></button>
+            <button onClick={toggleGraph}><h1>Statistiques</h1></button>
 
             <Switch
             onChange={toggleTheme}
