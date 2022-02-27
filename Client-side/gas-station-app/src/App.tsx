@@ -2,7 +2,19 @@ import React from "react";
 
 import NavComp from './components/NavComp';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState,useCallback } from "react";
+import useLocalStorage from './lib/useLocalStorage';
+import { ToggleModeNight } from './components/ToggleModeNight';
+//import { setTheme } from './components/ToggleModeNight';
+
+import './App.scss';
+
+
+
+
+
+
+
 
 
 function App() {
@@ -19,37 +31,48 @@ function App() {
 
 
   return (
-    <div style={styles.container}>
+    <div >
       <input
         type="text"
         onChange={changeTitle}
         value={title}
-        style={styles.input}
-      />
+      />  
     </div>
   );
 };
 
-  const styles = {
-    container: {
-      width: 500,
-      margin: "50px auto",
-      display: "flex",
-      justifyContent: "center",
-    },
-    input: {
-      width: 300,
-      padding: "5px 20px",
-    },
-  };
+
+
+	const [storageMode, setStorageMode] = useLocalStorage('darkmode');
+
+	const handleChangeMode = useCallback(
+		(e) => {
+			const modeValue = !!e.target.checked;
+			//setDarkMode(modeValue);
+			setStorageMode(modeValue);
+		},
+		[setStorageMode],
+	);
+/*
+    useEffect(() => {
+		    setTheme(storageMode || 'light');
+	    }, [storageMode]);
+*/
       
 
   return (
+
     <div 
    
-    className="App">
+    className={`App ${storageMode ? 'dark' : 'light'}`}>
+      					<ToggleModeNight
+						onChange={handleChangeMode}
+						mode={storageMode}
+					/>
+
     <NavComp />
     </div>
+    
   );
 }
 

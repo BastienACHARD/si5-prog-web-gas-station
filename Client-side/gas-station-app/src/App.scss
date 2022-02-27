@@ -1,0 +1,12 @@
+.App {
+	
+	display: flex;
+
+	
+	h1 {
+	}
+	&.dark {
+		background-color: #fbf3ea;
+		color: #fff;
+	}
+}
