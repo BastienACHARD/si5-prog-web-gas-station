@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
-  import {Stats} from "../Stats"  
-
 
 export default class Statisics extends Component {
-        
     render() {
-
-		return (
-	<Stats />
-		);
-	}
+        return (
+            <div>
+                <h1>Home</h1>
+                
+            </div>
+        )
+    }
 }

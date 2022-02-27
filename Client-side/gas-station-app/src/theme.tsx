@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 type Theme = "light" | "dark";
-type ThemeContext = { theme:Theme; toggleTheme: () => void; isDark: boolean };
+type ThemeContext = { theme: Theme; toggleTheme: () => void };
 // eslint-disable-next-line
 export const ThemeContext = React.createContext<ThemeContext>(
   {} as ThemeContext
@@ -9,31 +9,20 @@ export const ThemeContext = React.createContext<ThemeContext>(
 
 export const ThemeProvider: React.FC = ({ children }) => {
   const [theme, setTheme] = useState<Theme>("light");
-  const [isDark, setIsDark] = useState(false);
-
   const toggleTheme = () => {
-        setTheme(theme === "light" ? "dark" : "light");
-
-    localStorage.setItem("isDark", JSON.stringify(!isDark));
-
-    setIsDark(!isDark);
-
+    setTheme(theme === "light" ? "dark" : "light");
   };
 
-   const backgroundColor = isDark ?  "#0052A6":"#282c36" 
+  const color = theme === "light" ? "#0052A6"
+  : "#282c36" ;
+   const backgroundColor = theme === "light" ?  "#0052A6":"#282c36" 
  ;
 
-    useEffect(() => {
-       const isDark = localStorage.getItem("isDark") === "true";
-
-    setIsDark(isDark);
-  }, []);
-
+  document.body.style.color = color;
   document.body.style.backgroundColor = backgroundColor;
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme , isDark}}>
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   );
 };
-
