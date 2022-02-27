@@ -1,7 +1,12 @@
 import express, { Router } from 'express';
+import { HistoryPrice } from '../models/HistoryPrice';
 import { Station } from '../models/Station';
-import { getStationCollection } from '../mongodb/mongoClient';
+import { getPriceCollection, getStationCollection } from '../mongodb/mongoClient';
+import { insertPriceHistory } from '../mongodb/mongoProvider';
 import { getPath } from '../openroute/openrouteClient';
+import { averagePrice } from '../utils/averagePrice';
+import { dateAsNumber } from '../utils/dateAsNumber';
+import { fuels_name } from '../utils/fuels_name';
 import { getStationInPerimeters } from '../utils/geography';
 import { sortStationsByDistance, sortStationsByPrice } from '../utils/sort';
 
@@ -85,9 +90,26 @@ stationApi.post('/current/filter', async (req, res) => {
   }
 });
 
-stationApi.get('/test', (req, res) => {
+stationApi.get('/history/prices', async (req, res) => {
+  let tenLastDays = [];
+  var today = new Date();
+  for (let i=10; i>0; i--){
+    tenLastDays.push(dateAsNumber(new Date(new Date().setDate(today.getDate() - i))));
+  }
+  let filterString = '{"$or": [';
+  tenLastDays.forEach((d) => {
+    filterString += `{"date" : ${d}},`; 
+  });
+  filterString = filterString.slice(0, -1);
+  filterString += "]}";
+  res.status(200).json(await getPriceCollection()?.find(JSON.parse(filterString)).toArray() as unknown as HistoryPrice[]);
+});
+
+stationApi.get('/test', async (req, res) => {
   try{
-    res.status(200).json(getPath("43.5834188,7.1208154", "43.5834188,7.1208159"));
+    let stations = ((await getStationCollection()?.find({}).toArray()) as unknown as Station[]);
+    insertPriceHistory(20220227, averagePrice(stations, fuels_name));
+    res.status(200).json("Ok");
   } catch (err) {
     res.status(404).json(err);
   }
