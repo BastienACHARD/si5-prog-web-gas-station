@@ -1,6 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
-import Cities from './assets/data/Cities.json'
+import Cities from '../assets/data/Cities.json'
 
 const SearchBar = (props:any) =>  {
   return (

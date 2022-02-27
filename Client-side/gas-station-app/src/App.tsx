@@ -1,6 +1,6 @@
 import React from "react";
 
-import NavComp from './components/NavComp';
+import NavComp from './Contexts/NavComp';
 
 import { useEffect, useState } from "react";
 

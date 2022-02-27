@@ -1,10 +1,10 @@
 
 import React, {  useState } from 'react';
-import './App.css';
+import '../App.css';
 import "leaflet/dist/leaflet.css"
 import {Map} from './Map';
 import Select from 'react-select';
-import Station from './Models/Stations';
+import Station from '../Models/Stations';
 import SearchBar from './SearchBar'
 import { AiOutlineSearch } from "react-icons/ai";
 import { Button } from 'react-bootstrap';
@@ -15,7 +15,7 @@ import { CgSun } from "react-icons/cg";
 import { HiMoon } from "react-icons/hi";
 import styled from "styled-components";
 import { useEffect } from 'react';
-import stationService from "./Services/StationService";
+import stationService from "../Services/StationService";
 
 export {HomeCom}
 function HomeCom() {

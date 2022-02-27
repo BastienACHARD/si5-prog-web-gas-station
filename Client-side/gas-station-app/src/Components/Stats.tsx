@@ -1,6 +1,6 @@
-import Station from './Models/Stations';
+import Station from '../Models/Stations';
 import React, {  useState } from 'react';
-import stationService from "./Services/StationService";
+import stationService from "../Services/StationService";
 import { Button } from 'react-bootstrap';
 import Charts from './charts'
 import SearchBar from './SearchBar'
@@ -93,13 +93,12 @@ let stations:Station[]=[];
 
   function getTypes(){
      let stationsByType:Station[]=[];
-         let sum:number[]=[];
-
+    let sum:number[]=[];
      return () => {
 
     setav1(getAv("SP98") )
     setav2(getAv("E10") )
-setav4(getAv("SP95") )
+    setav4(getAv("SP95") )
 
     }
 
@@ -112,15 +111,15 @@ setav4(getAv("SP95") )
 
 <div  style={{width:"100%",marginTop:"50px"}}>
 <div style={{marginLeft:"200px",float:"left"}}>
-               <SearchBar  setSelectedOption={setSelectedOption} selectedOption={selectedOption}/>
+  <SearchBar  setSelectedOption={setSelectedOption} selectedOption={selectedOption}/>
 
 
 </div>
-<div style={{marginRight:"1100px"}}>
- <Button  variant="light"   onClick={ (()=> getByCity(selectedOption))}><AiOutlineSearch/></Button> 
-                <Button variant="light"   onClick={ getTypes()} >Go</Button> 
-                </div >
-               <Charts  v1={av1} v2={av2}  v4={av4}/>
+        <div style={{marginRight:"1100px"}}>
+        <Button  variant="light"   onClick={ (()=> getByCity(selectedOption))}><AiOutlineSearch/></Button> 
+        <Button variant="light"   onClick={ getTypes()} >Go</Button> 
+        </div >
+        <Charts  v1={av1} v2={av2}  v4={av4}/>
 </div >
  )
 

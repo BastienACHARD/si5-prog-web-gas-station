@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-  import {Stats} from "../Stats"  
+  import {Stats} from "../Components/Stats"  
 
 export default class Statisics extends Component {
     render() {
