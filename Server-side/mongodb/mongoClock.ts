@@ -2,10 +2,10 @@
 import { fetchFromGouv } from '../carburantgouv/carburantgouvClient';
 import { fetchFromMongo } from './mongoClient';
 
-function fetchAll(){
+async function fetchAll(){
     console.log("Updating ...");
-    //fetchFromGouv();
-    fetchFromMongo();
+    await fetchFromGouv();
+    await fetchFromMongo();
     setTimeout(fetchAll, process.env.CLOCK_TICK_IN_MS as number|undefined);
 }
 

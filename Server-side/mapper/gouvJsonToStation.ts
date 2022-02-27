@@ -3,7 +3,6 @@ import { Station } from "../models/Station";
 
 export function gouvJsonToStation(gouvJsonData : string){
     let stations : Station[] = [];
-    // Miam miam les données pas uniformes et pas normalisées 😋
     JSON.parse(gouvJsonData).pdv_liste.pdv.forEach((e: { prix: { _nom: string; _maj: Date; _valeur: string; }[]; _latitude: string; _longitude: string; adresse: string; ville: string; services: { service: string[]; }; }) => {
         let listeDePrix : Prix[] = [];
         if (e.prix !== undefined){
