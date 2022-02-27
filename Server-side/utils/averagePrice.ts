@@ -8,6 +8,7 @@ export function averagePrice(stations : Station[], fuels : string[]){
         stations.forEach((station) => {
             station.listeDePrix.forEach((p) => {
                 if (p.nom == fuel){
+                    console.log(p)
                     score += p.valeur;
                     nbStation += 1;
                 }
