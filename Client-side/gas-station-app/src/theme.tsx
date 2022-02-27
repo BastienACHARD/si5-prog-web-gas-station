@@ -10,21 +10,22 @@ export const ThemeContext = React.createContext<ThemeContext>(
 export const ThemeProvider: React.FC = ({ children }) => {
   const [theme, setTheme] = useState<Theme>("light");
   const [isDark, setIsDark] = useState(false);
-  let [th, setTh] = useState<string | null>(theme);
 
   const toggleTheme = () => {
         setTheme(theme === "light" ? "dark" : "light");
 
+    localStorage.setItem("isDark", JSON.stringify(!isDark));
 
     setIsDark(!isDark);
 
   };
 
-   const backgroundColor = theme === "light" ?  "#0052A6":"#282c36" 
+   const backgroundColor = isDark ?  "#0052A6":"#282c36" 
  ;
 
     useEffect(() => {
-   
+       const isDark = localStorage.getItem("isDark") === "true";
+
     setIsDark(isDark);
   }, []);
 
@@ -35,3 +36,4 @@ export const ThemeProvider: React.FC = ({ children }) => {
     </ThemeContext.Provider>
   );
 };
+
