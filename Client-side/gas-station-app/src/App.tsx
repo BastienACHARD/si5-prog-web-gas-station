@@ -17,6 +17,10 @@ import dark from './Styles/Themes/dark';
 
 // CSS
 import './App.css';
+import { GraphProvider } from './Contexts/graphContext';
+import { useState } from 'react';
+import { useContext } from 'react';
+import { GraphCtx } from './Contexts/graphContext';
 
 
 const App = () => {
@@ -25,24 +29,35 @@ const App = () => {
 
   // Hooks
   const [theme, setTheme] = usePersistedState<DefaultTheme>('theme', userPrefersDark ? dark : light);
+  const [graph, setGraph] = useState<boolean>(false);
+  const context = useContext(GraphCtx);
 
   // change le theme en fonction du Switch
   const toggleTheme = () => {
     setTheme(theme.title === 'light' ? dark : light);
   }
 
+  const toggleMap = () => {
+    setGraph(false);
+  }
+
+  // change la vue pour afficher les statistiques
+  const toggleGraph = () => {
+    //context!.updateGraphData();
+    setGraph(true);
+  }
+
   return (
     <StationProvider>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <Header toggleTheme={toggleTheme} />
-        <div className='listStation'>
-          <ListStationsComponent />
-        </div>
-        <div className='map'>
-          <LeafletMap />
-        </div>
-      </ThemeProvider>
+      <GraphProvider>
+        <ThemeProvider theme={theme}>
+          <GlobalStyle />
+          <Header toggleTheme={toggleTheme} toggleMap={toggleMap} toggleGraph={toggleGraph} />
+          {graph && <div className='statistiques'></div>}
+          {!graph && <div className='listStation'><ListStationsComponent /></div>}
+          {!graph && <div className='map'><LeafletMap /></div>}        
+        </ThemeProvider>
+      </GraphProvider>
     </StationProvider>
   );
 }

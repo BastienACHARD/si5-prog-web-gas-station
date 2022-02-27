@@ -7,14 +7,19 @@ import { ThemeContext } from 'styled-components';
 
 interface Props {
     toggleTheme(): void;
+    toggleMap(): void;
+    toggleGraph(): void;
 }
 
-export const Header: FC<Props> = ({ toggleTheme }) => {
+export const Header: FC<Props> = ({ toggleTheme, toggleMap, toggleGraph }) => {
     const { colors, title } = useContext(ThemeContext);
 
     return (
         <Container>
             <h1>Gazify</h1>
+
+            <button onClick={toggleMap}>Map</button>
+            <button onClick={toggleGraph}>Statistiques</button>
 
             <Switch
             onChange={toggleTheme}

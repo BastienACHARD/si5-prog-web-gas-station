@@ -29,14 +29,34 @@ export const FormFilterComponent: FC = () => {
     // update filter in the context
     const updateFilter = (formData: FormModel) => {
         const filter: Filter = {
-            latitude: 48.856614,
-            longitude: 2.3522219,
-            raduisInMeter: 1000,
+            latitude: context!.filter.latitude,
+            longitude: context!.filter.longitude,
+            radiusInMeter: context!.filter.radiusInMeter,
             fuels: formData.fuels ? [formData.fuels] : [],
             services: formData.services ? [formData.services] : [],
             sortByPrice: formData.sortByPrice ? true : false
         };
         context!.updateFilter(filter);
+    }
+
+    const getLocation = () => {
+        if (!navigator.geolocation) {
+            
+          } else {
+            navigator.geolocation.getCurrentPosition((position) => {
+                const filter: Filter = {
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude,
+                    radiusInMeter: context!.filter.radiusInMeter,
+                    fuels: context!.filter.fuels,
+                    services: context!.filter.services,
+                    sortByPrice: context!.filter.sortByPrice
+                };
+                context!.updateFilter(filter);
+            }, () => {
+                
+            });
+          }
     }
 
     return (
@@ -78,6 +98,7 @@ export const FormFilterComponent: FC = () => {
                 </ItemContainer>
                 <ItemContainer>
                 <input type="submit" />
+                <button onClick={getLocation}>Get Location</button>
                 </ItemContainer>
             </form>
         </FormFilterContainer>

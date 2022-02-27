@@ -1,5 +1,5 @@
 import { Station } from "../Models/Stations";
-import { getFilterData, getAllData } from "../API/api";
+import { getFilterData } from "../API/api";
 import { createContext, useState, FC } from "react";
 import { Filter } from "../Models/Filter";
 
@@ -14,18 +14,22 @@ export const StationCtx = createContext<contextType | null>(null);
 
 export const StationProvider: FC = ({ children }) => {
     const [stations, setStations] = useState<Station[]>([]);
-    const [filter, setFilter] = useState<Filter>({
+      
+    const filt = {
         latitude: 48.856614,
         longitude: 2.3522219,
-        raduisInMeter: 1000,
+        radiusInMeter: 5000,
         fuels: [],
         services: [],
         sortByPrice: false
-    });
+    }
+    
+    const [filter, setFilter] = useState<Filter>(filt);
 
     const updateStations = () => {
+        console.log(filter);
         getFilterData(
-            filter.latitude, filter.longitude, filter.raduisInMeter, filter.fuels,
+            filter.latitude, filter.longitude, filter.radiusInMeter, filter.fuels,
             filter.services, filter.sortByPrice
         ).then(res => {
             setStations(res ? res : []);
