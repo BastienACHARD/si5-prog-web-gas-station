@@ -4,7 +4,7 @@ import L from "leaflet";
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 
 let DefaultIcon = L.icon({
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-violet.png',
     shadowUrl: iconShadow
 });
 
@@ -13,6 +13,7 @@ class FloatButton extends React.Component<any, any> {
   helpDiv: HTMLButtonElement;
 
   createButtonControl() {
+
     const MapHelp = L.Control.extend({
       onAdd: (map:any) => {
         const helpDiv = L.DomUtil.create("button", "");
@@ -20,8 +21,9 @@ class FloatButton extends React.Component<any, any> {
         helpDiv.innerHTML = this.props.title;
 
         helpDiv.addEventListener("click", () => {
-          console.log(map.getCenter());
-          const marker = L.marker(this.props.markerPosition,this.props.description)
+        
+          const marker = L.marker(this.props.markerPosition)
+
             .addTo(map);
 
           marker.openPopup();

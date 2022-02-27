@@ -1,5 +1,4 @@
 import React from "react";
-
 import NavComp from './components/NavComp';
 
 import { useEffect, useState,useCallback } from "react";
@@ -63,13 +62,7 @@ function App() {
   return (
 
     <div 
-   
-    className={`App ${storageMode ? 'dark' : 'light'}`}>
-      					<ToggleModeNight
-						onChange={handleChangeMode}
-						mode={storageMode}
-					/>
-
+    className="App">
     <NavComp />
     </div>
     
