@@ -33,9 +33,9 @@ const StationService = {
             stations.push(station)
 
        })
-    return stations;git
+    return stations;
     },
-
+// Solution optimale par Boutheina karoui
     getClosestStations: async function(lat:any, long:any) {
           let closestStations:Station[]=[]; 
             const requestOptions = {
@@ -51,7 +51,6 @@ const StationService = {
             let response = await fetch(
       'http://localhost:8080/api/stations/current/byDistance/',requestOptions
     );
-console.log(response)
           let responseJson = await response.json();
           let listOfStations=JSON.parse(responseJson);
         
@@ -72,7 +71,7 @@ console.log(response)
             closestStations.push(station)
 
              })
-             console.log(closestStations)
+         
              return closestStations;
     },
 
