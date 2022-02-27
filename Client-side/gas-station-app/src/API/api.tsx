@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Prix } from "../Models/Prix";
 import { Station } from "../Models/Stations";
+import { GraphModel } from '../Models/GraphModel';
 
 const instance = axios.create({
   baseURL: 'http://localhost:8080/api/',
@@ -8,19 +9,18 @@ const instance = axios.create({
   headers: { 'X-Custom-Header': 'foobar' }
 });
 
-// à modifier car on ne prend jamais toute les données
-export const getAllData = async () => {
+// get les données pour le graph (le prix moyen sur les 10 derniers jours par carburant)
+export const getPricesForGraph = async () => {
   try {
-    const body = { 'city': 'Metz' };
-    const response = await instance.post('stations/current/byCity', body);
-    const data: Station[] = response.data.map((item: { latitude: number; longitude: number; adresse: string; ville: string; services: string[]; listeDePrix: Prix[] }) => {
+    const response = await instance.get('stations/history/prices');
+    const data: GraphModel[] = response.data.map((item: { Gazole: number, E85: number, E10: number, SP98: number, GPLc: number, date: number }) => {
       return ({
-        latitude: item.latitude,
-        longitude: item.longitude,
-        adresse: item.adresse,
-        ville: item.ville,
-        services: item.services,
-        listeDePrix: item.listeDePrix
+        Gazole: item.Gazole,
+        E85: item.E85,
+        E10: item.E10,
+        SP98: item.SP98,
+        GPLc: item.GPLc,
+        date: item.date
       });
     });
     return data;
