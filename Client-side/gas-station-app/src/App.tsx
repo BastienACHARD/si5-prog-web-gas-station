@@ -1,4 +1,5 @@
 import React from "react";
+
 import NavComp from './components/NavComp';
 
 import { useEffect, useState,useCallback } from "react";
@@ -7,6 +8,8 @@ import { ToggleModeNight } from './components/ToggleModeNight';
 //import { setTheme } from './components/ToggleModeNight';
 
 import './App.scss';
+import { MapContainer } from "react-leaflet";
+import L, { map } from "leaflet";
 
 
 
@@ -19,11 +22,21 @@ import './App.scss';
 function App() {
 
   const [title, setTitle] = useState("Gazify");
+  /*
+  var map = new MapContainer('map', {
 
+    fullscreenControl: {
+        pseudoFullscreen: false // if true, fullscreen to page width and height
+    }
+});
+// or, add to an existing map:
+map.addControl(new L.Control.Fullscreen());
   useEffect(() => {
-    // This will run when the page first loads and whenever the title changes
     document.title = title;
   }, [title]);
+*/
+
+
 
   const changeTitle = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     setTitle(event.target.value);
@@ -59,11 +72,17 @@ function App() {
 */
       
 
+
   return (
 
     <div 
-    className="App">
-    <NavComp />
+   
+    className={`App ${storageMode ? 'dark' : 'light'}`}>
+      					<ToggleModeNight
+						onChange={handleChangeMode}
+						mode={storageMode}
+					/>    <NavComp />
+    
     </div>
     
   );

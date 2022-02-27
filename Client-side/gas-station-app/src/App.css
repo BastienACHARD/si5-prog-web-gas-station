@@ -86,3 +86,12 @@ a:hover {
 #clearBtn {
     cursor: pointer;
 }
+
+.wrapper {
+    height: 300px;
+  }
+  
+  #map {
+    height: 100%;
+  }
+  
