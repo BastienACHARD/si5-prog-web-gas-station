@@ -1,12 +1,18 @@
+// Imports 
+import { useState, useContext } from 'react';
+
 // Map
 import LeafletMap from './Components/Map/LeafletMap';
 
 // Components
 import ListStationsComponent from './Components/ListStation/ListStationsComponent';
 import { Header } from './Components/Header';
+import { GraphComponent } from './Components/Statistiques/graphComponent';
 
 // Context
 import { StationProvider } from './Contexts/stationContext';
+import { GraphCtx } from './Contexts/graphContext';
+import { GraphProvider } from './Contexts/graphContext';
 
 // theme
 import usePersistedState from './utils/usePersistedState';
@@ -17,10 +23,6 @@ import dark from './Styles/Themes/dark';
 
 // CSS
 import './App.css';
-import { GraphProvider } from './Contexts/graphContext';
-import { useState } from 'react';
-import { useContext } from 'react';
-import { GraphCtx } from './Contexts/graphContext';
 
 
 const App = () => {
@@ -43,21 +45,19 @@ const App = () => {
 
   // change la vue pour afficher les statistiques
   const toggleGraph = () => {
-    //context!.updateGraphData();
+    context!.updateGraphData();
     setGraph(true);
   }
 
   return (
     <StationProvider>
-      <GraphProvider>
         <ThemeProvider theme={theme}>
           <GlobalStyle />
           <Header toggleTheme={toggleTheme} toggleMap={toggleMap} toggleGraph={toggleGraph} />
-          {graph && <div className='statistiques'></div>}
+          {graph && <div className='statistiques'><GraphComponent /></div>}
           {!graph && <div className='listStation'><ListStationsComponent /></div>}
           {!graph && <div className='map'><LeafletMap /></div>}        
         </ThemeProvider>
-      </GraphProvider>
     </StationProvider>
   );
 }

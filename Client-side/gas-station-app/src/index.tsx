@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { GraphProvider } from './Contexts/graphContext';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <GraphProvider>
+      <App />
+    </GraphProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

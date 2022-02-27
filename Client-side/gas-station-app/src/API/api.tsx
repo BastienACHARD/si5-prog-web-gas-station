@@ -9,12 +9,11 @@ const instance = axios.create({
   headers: { 'X-Custom-Header': 'foobar' }
 });
 
-// à modifier car on ne prend jamais toute les données
+// get les données pour le graph (le prix moyen sur les 10 derniers jours par carburant)
 export const getPricesForGraph = async () => {
   try {
-    //const body = { 'city': 'Metz' };
     const response = await instance.get('stations/history/prices');
-    const data: GraphModel[] = response.data.map((item: { Gazole: number, E85: number, E10: number, SP98: number, GPLc: number, date: Date }) => {
+    const data: GraphModel[] = response.data.map((item: { Gazole: number, E85: number, E10: number, SP98: number, GPLc: number, date: number }) => {
       return ({
         Gazole: item.Gazole,
         E85: item.E85,
