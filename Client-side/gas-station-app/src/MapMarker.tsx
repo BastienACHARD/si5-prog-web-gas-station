@@ -15,7 +15,7 @@ export{MapMarker}
     }
   `;
     return (
-
+        
     <Marker key={props.index} position={[props.x._latitude , props.x._longitude]}
                         icon={props.icon}>
                         <StyledPop>

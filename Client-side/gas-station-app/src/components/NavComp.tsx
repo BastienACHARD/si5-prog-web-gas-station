@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 
 import Home from './Home';
-import Logo from "./l.png"
+import Logo from "../assets/images/logo.png"
 import Statistics from './Statistics';
 
 export default class NavComp extends Component {
