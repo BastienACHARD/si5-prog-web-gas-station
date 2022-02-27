@@ -9,24 +9,26 @@ import { fuels_name } from '../utils/fuels_name';
 import { todayDateAsNumber } from '../utils/dateAsNumber';
 
 async function fetchFromGouv(){
-    const today = todayDateAsNumber();
-    /*
-    console.log("Updating mongo data with government data")
 
+    const today = todayDateAsNumber();
+
+    console.log("Updating mongo data with government data")
+    /*
     // récupérer le .zip du gouvernement correspondant aux dernières données
-    const options = {
-        method: 'GET' 
+    try {
+        fetch('https://donnees.roulez-eco.fr/opendata/instantane')
+        .then(res => {
+            fs.writeFile('zip_xml_file/PrixCarburants_instantane.zip', res.body); 
+        })
+    } catch (error) {
+        console.log(error);
     };
-    await fetch("https://donnees.roulez-eco.fr/opendata/instantane", options).then(async (res) => {
-        let content = await res.text();
-        await fs.writeFile('zip_xml_file/PrixCarburants_instantane.zip', JSON.stringify(content));
-    });
 
     // dezip
     await unzip('zip_xml_file/PrixCarburants_instantane.zip');
     */
     // xml => json, puis transformation des données en Array de l'objet "Station"
-    const jsonContent = await xmlToJson('zip_xml_file/PrixCarburants_instantane.xml');
+    const jsonContent = await xmlToJson(`zip_xml_file/PrixCarburants_instantane.xml`);
     const stations = gouvJsonToStation(jsonContent);
     
     // supprimer les anciennes données
@@ -40,6 +42,7 @@ async function fetchFromGouv(){
 
     // insérer les données de prix du jour
     await insertPriceHistory(today, averagePrice(stations, fuels_name));
+
 }
 
 export { fetchFromGouv };
