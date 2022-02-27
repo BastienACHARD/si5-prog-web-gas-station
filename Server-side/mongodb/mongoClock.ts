@@ -4,7 +4,7 @@ import { fetchFromMongo } from './mongoClient';
 
 async function fetchAll(){
     console.log("Updating ...");
-    await fetchFromGouv();
+    //await fetchFromGouv();
     await fetchFromMongo();
     setTimeout(fetchAll, process.env.CLOCK_TICK_IN_MS as number|undefined);
 }
