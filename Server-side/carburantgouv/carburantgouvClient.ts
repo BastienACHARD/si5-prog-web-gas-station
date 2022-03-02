@@ -12,15 +12,17 @@ async function fetchFromGouv(){
     const today = todayDateAsNumber();
 
     console.log("Updating mongo data with government data")
-    // récupérer le .zip du gouvernement correspondant aux dernières données
+    // récupérer le .zip du gouvernement correspondant aux dernières donnée
+
     try {
-        fetch('https://donnees.roulez-eco.fr/opendata/instantane')
-        .then(res => {
-            fs.writeFile('zip_xml_file/PrixCarburants_instantane.zip', res.body); 
+        await fetch('https://donnees.roulez-eco.fr/opendata/instantane')
+        .then(async (res) => {
+            await fs.writeFile('zip_xml_file/PrixCarburants_instantane.zip', res.body); 
         })
     } catch (error) {
         console.log(error);
     };
+
 
     // dezip
     await unzip('zip_xml_file/PrixCarburants_instantane.zip');
@@ -29,10 +31,10 @@ async function fetchFromGouv(){
     const stations = gouvJsonToStation(jsonContent);
     
     // supprimer les anciennes données
-    //await dropMongo();
+    await dropMongo();
     
     // insérer les nouvelles données
-    //await insertMongo(JSON.stringify(stations));
+    await insertMongo(JSON.stringify(stations));
     
     // supprimer les données de prix du jour
     await dropPriceHistory(today);
